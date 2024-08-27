@@ -1,0 +1,42 @@
+.ourValueSubtitle {
+   text-transform: uppercase;
+   font-size: small;
+}
+.ourValueTitle {
+   font-size: xx-large;
+   padding-bottom: var(--spacing-40);
+}
+.ourValueCards {
+   display: flex;
+   gap: var(--spacing-20);
+   align-items: center;
+   justify-content: space-between;
+   flex-wrap: wrap;
+   
+}
+     
+.ourValueItem { 
+   border-bottom: 1px solid var(--border-color);
+   padding-bottom: var(--spacing-24);
+}
+
+/* For larger screens (desktops) */
+@media screen and (min-width: 768px) {
+   .ourValueItem {
+      flex: 0 1 48%;
+   }
+}
+
+/* For small screens (mobile devices) */
+@media screen and (max-width: 767px) {
+   .ourValueItem {
+      flex: 0 1 100%;
+   }
+}     
+.ourValueItemTitle {
+   font-size: 40px;
+}
+.ourValueItemSubtitle {
+   font-size: x-large;
+   padding-bottom: var(--spacing-20);
+}
