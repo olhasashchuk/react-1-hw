@@ -1,4 +1,4 @@
-const OurValueData = [
+const ourValueData = [
    { 
       title: '01', 
       subtitle: 'Exploration.', 
@@ -21,4 +21,4 @@ const OurValueData = [
    },
 ];
 
-export default OurValueData
+export default ourValueData

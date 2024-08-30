@@ -1,4 +1,4 @@
-const OurPartnersData = [
+const ourPartnersData = [
    { logo: './business_partners/alphabet-logo.png'},
    { logo: './business_partners/amazon_logo.png'},
    { logo: './business_partners/CBC_Logo_White.png'},
@@ -9,4 +9,4 @@ const OurPartnersData = [
    { logo: './business_partners/sodexo-logo.png'},
 ];
 
-export default OurPartnersData
+export default ourPartnersData
