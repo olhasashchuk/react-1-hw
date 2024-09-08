@@ -21,4 +21,33 @@ export default function OurPartners() {
    )
  }
 
+ export const TodoList = () => {
+   const [inputValue, setInputValue] = useState('');
+   const [todoListArray, setTodoListArray] = useState([]);
+ 
+   const addItem = () => {
+     const tempArray = [...todoListArray, inputValue];
+ 
+     setTodoListArray(tempArray);
+   }
+ 
+   const onInputChange = (event) => {
+     setInputValue(event.target.value);
+   };
+ 
+   return(
+     <div>
+       <input value={inputValue} onChange={onInputChange} />
+       <Button text="Add item" onClick={addItem} />
+ 
+       {todoListArray.map((todoListItem, i) => (
+         <div key={`Todolist-${i}`}>
+           <p>index: {i}</p>
+           {todoListItem}
+         </div>
+       ))}
+     </div>
+   );
+ };
+
  
