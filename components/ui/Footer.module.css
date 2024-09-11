@@ -46,3 +46,15 @@
 .footerList li {
   padding-block: var(--spacing-04);
 }
+
+.footerList li a {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.footerList li svg {
+  height: 30px;
+  width: 30px;
+}
+
