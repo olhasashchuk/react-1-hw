@@ -8,23 +8,33 @@ import { PlanetCard } from '@/components/destination/PlanetCard';
 import { PlanetWishlistItem } from '@/components/destination/PlanetWishlistItem';
 
 export const Destinations = () => {
-  const [selectedPlanets, onAddPlanet] = useState([]);
-  
-  let isPlanetSelected = false;
-  let numberOfPlanets = 0;
-  const onAddOrRemovePlanet = (name, index) => {
-    onAddPlanet((prevAddedPlanet) => {
-      if (prevAddedPlanet.includes(name)) {
-        return prevAddedPlanet.filter(planet => planet !== name)
-      } else {
-        return [...prevAddedPlanet, name]
-      } 
-    })
+  const [selectedPlanets, setSelectedPlanets] = useState([]);
    
-    console.log(`You seleceted the following planet: ${name}, with the index of ${index}`);
-  }
+  const handleAddWishlistItem = ({ name, thumbnail }) => {
+    const isSelectedCurrently = selectedPlanets.some(planet => planet.name === name);
+    if (isSelectedCurrently) {
+      window.alert('This Planet was added in the wishlist')
+    } else {
+      setSelectedPlanets([...selectedPlanets, { name, thumbnail }])
+      console.log(selectedPlanets)
+    }
+  };
 
-  numberOfPlanets = selectedPlanets.length;
+  const handleRemoveFromWishlist = (name) => {
+    setSelectedPlanets(selectedPlanets.filter((planet) => planet.name !== name));
+  };
+  
+  // const handleAddOrRemovePlanet = (id) => {
+  //   const isSelectedCurrently = selectedPlanets.includes(id)
+  //   if (isSelectedCurrently) {
+  //     const newList = selectedPlanets.filter(planet => planet !== id);
+  //     setSelectedPlanets(newList);
+  //   } else {
+  //     setSelectedPlanets([...selectedPlanets, id])
+  //   }
+  // }
+
+  let numberOfPlanets = selectedPlanets.length;
 
   return (
     <div className="fullBGpicture">
@@ -33,42 +43,36 @@ export const Destinations = () => {
         <section className="card">
           <h2>Wishlist</h2>
           <p>{numberOfPlanets === 0 ? "No planets in wishlist" : `You have ${numberOfPlanets} in your wishlist`}</p>
-          <b>List coming soon after lesson 3!</b>
-          
-          {/* STOP! - this is for week 3!*/}
-          {/* TASK - React 1 week 3 */}
-          {/* Import the AddWishlistItem react component */}
-          {/* <AddWishlistItem /> */}
-          {/* TASK - React 1 week 3 */}
-          {/* Convert the list, so it is using selectedPlanets.map() to display the items  */}
-          {/* Implement the "REMOVE" function */}
-          {/* uncomment the following code snippet: */}
-          {/* 
+          <AddWishlistItem onAddWishlistItem={handleAddWishlistItem}/>        
           <h3>Your current wishlist</h3>
           <div className={styles.wishlistList}>
+          {selectedPlanets.map((planet, index)=>{
+            return(
             <PlanetWishlistItem 
-              name="europa"
-              onRemove={() => removeFromWishlist('europa')}
-              thumbnail="/destination/image-europa.png"
-            />
-            <PlanetWishlistItem 
-              name="europa"
-              onRemove={() => removeFromWishlist('europa')}
-              thumbnail="/destination/image-europa.png"
-            />
-          </div> */}
+              key={`wishListItem-${index}`}   
+              name={planet.name}
+              onRemove={() => handleRemoveFromWishlist(planet.name)}
+              thumbnail={planet.thumbnail}
+            />)
+          })            
+          }
+
+          </div>
         </section>
         <section className="card">
           <h2>Possible destinations</h2>
           {planetsData.map((card, index) => (
-               <PlanetCard 
-                  key={`ourPlanetItem-${index}`} 
-                  name={card.name} 
-                  thumbnail={card.thumbnail} 
-                  description={card.description}
-                  isPlanetSelected={selectedPlanets.includes(card.name)}
-                  onAddOrRemovePlanet={() => onAddOrRemovePlanet(card.name, index)}
-               />
+              <PlanetCard 
+                key={`ourPlanetItem-${index}`}
+                id={index} 
+                name={card.name} 
+                thumbnail={card.thumbnail} 
+                description={card.description}
+                isPlanetSelected={selectedPlanets.some(planet => planet.name === card.name)}
+                onAddPlanetToWishlist={() => handleAddWishlistItem({ name: card.name, thumbnail: card.thumbnail })}
+                onRemovePlanetToWishlist={() => handleRemoveFromWishlist(card.name)}
+              />
+               
             ))}
         </section>
       </main>
