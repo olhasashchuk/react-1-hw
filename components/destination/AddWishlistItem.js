@@ -2,21 +2,37 @@
 
 import { useState } from 'react';
 import styles from './destination.module.css';
+import { Button } from '../ui/Button';
+import planetsData from '@/data/planetsData';
 
 export const AddWishlistItem = ({
   onAddWishlistItem,
 }) => {
-  const [thumbnail, onThumbnailChange] = useState('/destination/image-europa.png');
-  // TASK - React 1 week 3
-  // 1. Add a useState for the handling the <input id="customWishlist" type="text" />
-  // 2. Connect the onThumbnailChange to the <select>
+  const [thumbnail, setThumbnailChange] = useState('');
+  const [wishlistInputValue, setWishlistInputValue] = useState('');
+
+  const onWishlistInputValue = (event) => {
+    setWishlistInputValue(event.target.value)
+  } 
+  
+  const onThumbnailChange = (event) => {
+    setThumbnailChange(event.target.value)
+  }
 
   const onAddItemPressed = () => {
-    // TASK - React 1 week 3
-    // implement this function
-    // Clear the <input/> field on button press
-    // pass the thumbnail and the name from the input to the onAddWishlistItem function
-    // call the onAddWishlistItem here
+    const inputValueUpperCase = wishlistInputValue.trim().toUpperCase();
+    const selectedPlanet = planetsData.find(
+      (planet) =>
+        thumbnail.toUpperCase().includes(planet.name.toUpperCase()) &&
+        planet.name.toUpperCase() === inputValueUpperCase
+    );
+  
+    if (selectedPlanet) {
+      onAddWishlistItem({ name: wishlistInputValue, thumbnail });
+      setWishlistInputValue('');
+    } else {
+      window.alert('Planet name does not match the selected image!');
+    }
   }
 
 
@@ -24,15 +40,24 @@ export const AddWishlistItem = ({
     <div className={styles.addWishlistItem}>
       <p>Add custom planet to wishlist</p>
       <label htmlFor="customWishlist">Wishlist item name</label>
-      <input id="customWishlist" type="text" />
+      <input id="customWishlist" type="text" value={wishlistInputValue} onChange={onWishlistInputValue}/>
       <label htmlFor="customWishlistThumbnail">Wishlist item thumbnail</label>
-      <select id="customWishlistThumbnail" >
-        <option value="/destination/image-europa.png">EUROPA</option>
-        <option value="/destination/image-mars.png">MARS</option>
-        <option value="/destination/image-moon.png">MOON</option>
-        <option value="/destination/image-titan.png">TITAN</option>
+      <select 
+        className ="textCapital"
+        id="customWishlistThumbnail"
+        value={thumbnail}
+        onChange={onThumbnailChange}
+      >
+        {planetsData.map((planet, index) => (
+          <option className ="textCapital" key={`ourPlanetOption-${index}`} value={planet.thumbnail}>
+            {planet.name}
+          </option>
+        ))}
       </select>
-      <button>ADD CUSTOM</button>
+      <Button
+        onClick={onAddItemPressed}
+        name = 'add custom'
+      />
     </div>
   );
 };

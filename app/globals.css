@@ -120,6 +120,7 @@ button {
   background-color: white;
   font-weight: 600;
   letter-spacing: 2px;
+  color:#000;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -215,4 +216,16 @@ button {
 
 .fullBGpicture > main {
   overflow: auto;
+}
+
+.textCapital {
+  text-transform: uppercase;
+}
+
+.lightTheme {
+  background-color: #54d6ff33;
+}
+
+.darkTheme {
+  background-color: #0000;
 }
